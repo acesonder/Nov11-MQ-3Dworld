@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Quest 3D Virtual Hangout Room</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: #000;
+        }
+        
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        #ui-overlay > * {
+            pointer-events: auto;
+        }
+        
+        .panel {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            max-width: 400px;
+        }
+        
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+        
+        button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #0052a3;
+        }
+        
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        #status {
+            color: #4CAF50;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .controls {
+            margin-top: 10px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        label.file-label {
+            background: #FF6B35;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        
+        label.file-label:hover {
+            background: #E55A2B;
+        }
+        
+        #world-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        
+        .world-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .world-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .color-picker {
+            width: 50px;
+            height: 35px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        #instructions {
+            font-size: 12px;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div id="ui-overlay">
+        <div class="panel">
+            <h1>🥽 Meta Quest 3D Hangout</h1>
+            <div id="status">Initializing...</div>
+            
+            <div class="button-group">
+                <button id="enter-vr-btn" disabled>Enter VR Mode</button>
+                <button id="capture-room-btn">Capture Space</button>
+            </div>
+            
+            <div class="controls">
+                <h3>3D Tools</h3>
+                <div class="button-group">
+                    <button id="draw-mode-btn">Draw Mode</button>
+                    <button id="erase-mode-btn">Erase Mode</button>
+                    <input type="color" id="draw-color" class="color-picker" value="#ff0000">
+                </div>
+                
+                <label for="model-upload" class="file-label">Import 3D Model</label>
+                <input type="file" id="model-upload" accept=".gltf,.glb">
+            </div>
+            
+            <div class="controls">
+                <h3>World Management</h3>
+                <div class="button-group">
+                    <button id="save-world-btn">Save World</button>
+                    <button id="load-world-btn">Load World</button>
+                    <button id="clear-world-btn">Clear World</button>
+                </div>
+                <div id="world-list"></div>
+            </div>
+            
+            <div id="instructions">
+                <strong>Controls:</strong><br>
+                🖱️ Mouse: Look around<br>
+                WASD: Move<br>
+                Space: Up | Shift: Down<br>
+                Click: Draw (when in draw mode)<br>
+                🥽 VR: Use controllers to navigate and draw
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
